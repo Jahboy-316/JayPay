@@ -1,6 +1,6 @@
-# JayPay Frontend
+# JayPay Banking System
 
-The official Next.js (App Router, JavaScript) frontend for the **JayPay Banking System**.
+The **JayPay Banking System** monorepo contains the Next.js frontend and the Express/PostgreSQL backend in `Backend/`.
 
 Designed according to the strict **OKX / Phantom** minimal financial design system:
 - **3-colour palette only**: Ink (`#0B0F0E`), Mist (`#F4F6F5`), Steel (`#8A918E`).
@@ -49,21 +49,32 @@ npm start
 
 ## Running Both Apps Together
 
-From the project root:
+From the repository root:
 
 **Terminal 1 (Backend):**
 ```bash
-cd Baxkend
+cd Backend
+npm install
 npm start
 # Express runs on http://localhost:5000
 ```
 
 **Terminal 2 (Frontend):**
 ```bash
-cd frontend
 npm run dev
 # Next.js runs on http://localhost:3000
 ```
+
+## Deploying the Backend to Render
+
+The root `render.yaml` defines a free web service with `Backend/` as its root directory. In Render, create a **Blueprint** for this repository and set the required environment variables when prompted:
+
+* `DATABASE_URL` — hosted PostgreSQL connection string
+* `JWT_SECRET` — long, unique secret (at least 32 characters)
+* `JWT_REFRESH_SECRET` — separate long, unique secret
+* `FRONTEND_ORIGIN` — deployed frontend origin, for example `https://your-app.vercel.app`
+
+Render installs backend dependencies, runs database migrations before deployment, starts the API with `npm start`, and checks `/health`. Do not put production credentials in the repository.
 
 ---
 
