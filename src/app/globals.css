@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+:root[data-theme="dark"] {
+  --ink: #0B0F0E;
+  --mist: #F4F6F5;
+  --steel: #8A918E;
+  --bg: var(--ink);
+  --surface: color-mix(in srgb, var(--mist) 6%, var(--ink));
+  --border: color-mix(in srgb, var(--mist) 10%, transparent);
+  --text: var(--mist);
+  --text-muted: color-mix(in srgb, var(--mist) 60%, transparent);
+  --accent: var(--mist);
+  --on-accent: var(--ink);
+  --danger-muted: #E5484D;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root[data-theme="light"] {
+  --ink: #0B0F0E;
+  --mist: #F4F6F5;
+  --steel: #8A918E;
+  --bg: var(--mist);
+  --surface: color-mix(in srgb, var(--ink) 4%, var(--mist));
+  --border: color-mix(in srgb, var(--ink) 10%, transparent);
+  --text: var(--ink);
+  --text-muted: color-mix(in srgb, var(--ink) 60%, transparent);
+  --accent: var(--ink);
+  --on-accent: var(--mist);
+  --danger-muted: #E5484D;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-roboto), system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular nums for all monetary figures and numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Squircles */
+.squircle {
+  border-radius: 16px;
+  corner-shape: squircle;
+}
+@supports not (corner-shape: squircle) {
+  .squircle {
+    border-radius: 16px;
+  }
+}
+
+.squircle-card {
+  border-radius: 20px;
+  corner-shape: squircle;
+}
+@supports not (corner-shape: squircle) {
+  .squircle-card {
+    border-radius: 20px;
+  }
+}
+
+.squircle-dialog {
+  border-radius: 24px;
+  corner-shape: squircle;
+}
+@supports not (corner-shape: squircle) {
+  .squircle-dialog {
+    border-radius: 24px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* PIN shake animation */
+@keyframes pinShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.animate-pin-shake {
+  animation: pinShake 240ms ease-in-out;
+}
+
+/* Scale pop animation for dot fill */
+@keyframes dotPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-dot-pop {
+  animation: dotPop 120ms ease-out;
+}
+
+/* Focus outline */
+*:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
 }
